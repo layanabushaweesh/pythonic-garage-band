@@ -159,7 +159,7 @@ def test_to_list():
 #######################
 
 
-# @pytest.fixture
+@pytest.fixture
 def nirvana_data():
     return {
         "name": "Nirvana",
@@ -171,7 +171,7 @@ def nirvana_data():
     }
 
 
-# @pytest.fixture
+@pytest.fixture
 def one_band():
     members = [
         Guitarist("Kurt Cobain"),
@@ -184,7 +184,7 @@ def one_band():
     return some_band
 
 
-# @pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True)
 def clean():
     """runs before each test automatically.
     This is necessary because otherwise band instances added in one test

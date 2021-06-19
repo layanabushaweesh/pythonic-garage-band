@@ -1,5 +1,5 @@
 
-from abc import abstractmethod
+from abc import abstractmethod,ABC
 from typing import Counter
 # abstractmethod mehod use to force the dev to defin method in sub class and we but it in base class as pass
 
@@ -7,46 +7,42 @@ from typing import Counter
 # class to make our data type for band
 
 class Band:
+    instances = []
 
-   all_band=[]
-   count  =0
-   def __init__(self,name,list):
+    def __init__(self, name, members):
+        self.name = name
+        self.members = members
+        self.instances.append(self)
 
-      self.name=name
-      self.member=list
-      self.__class__.count += 1
-      Band.all_band.append(self.__class__)
+    @classmethod
+    def to_list(cls):
+        return cls.instances
 
-   def play_solos(self):
-      #it will loop in array and append each item to new list that i crate
+    def play_solos(self):
+       #it will loop in array and append each item to new list that i crate
       # pass
 
       solo_list = []
 
-      for mempers in self.member:
+      for item in self.members:
 
-       solo_list.append(mempers.play_solos())
+            solo_list.append(item.play_solo())
 
       return solo_list
 
-
-   def __str__(self):
+    def __str__(self):
         # pass
-      return(f"My name is  {self.name} and I {self.member}" )
+      return(f"My name is  {self.name} and I {self.members}" )
 
-   def __repr__(self):
+    def __repr__(self):
 
-      return f"Band instance. name={self.name} , member={self.member}"
+      return f"Band instance. name={self.name} , member={self.members}"
 
-   @classmethod
 # class method to do somthing for the base class and hereh it is for return a list that previously created
-
-   def to_list(cls):
-
-      return cls.all_band
+  
 
 
-class Musician:
+class Musician():
 
    def __init__(self,name):
     self.name=name
@@ -60,13 +56,13 @@ class Musician:
 
       # Bassist instance. Name = Meshell Ndegeocello => return as this sample Bassist the name of class it self
 
-      return f"{self.__class__.__name__} instance. Name = {self.name}"
+      return f"{type(self).__name__} instance. Name = {self.name}"
 
    @abstractmethod
    def get_instrument(self):
      pass
 
-   @abstractmethod
+   @staticmethod
    def play_solos(self):
       pass
 
@@ -81,7 +77,7 @@ class Guitarist(Musician):
    def get_instrument(self):
       return "guitar"
 
-   def play_solos(self):
+   def play_solo(self):
     return "face melting guitar solo"
 
 
@@ -93,7 +89,7 @@ class Bassist(Musician):
    def get_instrument(self):
       return "bass"
 
-   def play_solos(self):
+   def play_solo(self):
     return "bom bom buh bom"
 
 class Drummer(Musician):
@@ -104,7 +100,7 @@ class Drummer(Musician):
    def get_instrument(self):
       return "drums"
 
-   def play_solos(self):
+   def play_solo(self):
     return "rattle boom crash"
 
 
